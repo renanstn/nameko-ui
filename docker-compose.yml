@@ -1,0 +1,6 @@
+services:
+
+  broker:
+    image: rabbitmq:3
+    ports:
+      - 5672:5672
