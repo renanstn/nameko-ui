@@ -7,6 +7,7 @@ authors = ["Renan Santana <renan_ota@hotmail.com>"]
 [tool.poetry.dependencies]
 python = "^3.9"
 nameko = "^2.14.1"
+Flask = "^2.0.2"
 
 [tool.poetry.dev-dependencies]
 
