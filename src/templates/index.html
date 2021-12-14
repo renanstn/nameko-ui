@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.min.css') }}">
+  <title>Nameko UI</title>
+</head>
+
+<body>
+  <div class="container">
+
+  <nav class="navbar navbar-dark bg-dark">
+    <div class="container-fluid">
+      <span class="navbar-brand mb-0 h1">Service Name</span>
+    </div>
+  </nav>
+
+    <table class="table">
+      <tbody>
+        {% for method in methods %}
+        <tr>
+          <td class="align-middle">{{ method.name }}</td>
+          <td><button type="button" class="btn btn-primary btn-sm">Play</button></td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</body>
+
+</html>
+
+<script src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>

@@ -1,5 +1,5 @@
 import inspect
-import examples.service as service
+import service
 
 
 members = inspect.getmembers(service)
@@ -13,13 +13,8 @@ if service_class_name is None:
     print("Nameko class not identified")
     exit(1)
 
-print('service_class_name:')
-print(service_class_name)
-
 service_class = getattr(service, service_class_name)
-
 members_of_class = inspect.getmembers(service_class)
-
 methods_and_params = {}
 
 for member in members_of_class:
@@ -37,5 +32,4 @@ for member in members_of_class:
             continue
         methods_and_params[method_name].append(param)
 
-print('methods_and_params:')
 print(methods_and_params)
