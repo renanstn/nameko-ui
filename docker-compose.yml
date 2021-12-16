@@ -2,5 +2,15 @@ services:
 
   broker:
     image: rabbitmq:3
+    container_name: broker
     ports:
       - 5672:5672
+
+  app:
+    container_name: app
+    build:
+      context: .
+    depends_on:
+      - broker
+    volumes:
+      - ./src:/app/
