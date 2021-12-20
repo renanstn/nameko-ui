@@ -21,17 +21,45 @@
     <br>
 
     {% for method in methods %}
-    <span>{{ method.name }}</span>
-    <form action="/call_rpc/{{ service_name }}" method="POST">
-
-      {% for param in method.params %}
-      <label for="{{ method.name }}_{{ param }}">{{param}}</label>
-      <input type="text" name="{{ method.name }}_{{ param }}" id="{{ method.name }}_{{ param }}">
-      {% endfor %}
-
-      <input type="hidden" name="method" value="{{ method.name }}">
-      <button type="submit" class="btn btn-success btn-sm">Play</button>
-    </form>
+    <div class="card">
+      <div class="card-header">
+        <h5 class="card-title">
+          <button
+            class="btn-sm btn-secondary"
+            type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#collapse_{{ method.name }}"
+          >
+            Toggle params
+          </button>
+          {{ method.name }}
+        </h5>
+      </div>
+      <div class="card-body">
+        <form action="/call_rpc/{{ service_name }}" method="POST">
+          <div class="collapse" id="collapse_{{ method.name }}">
+            {% for param in method.params %}
+            <div class="mb-2">
+              <label
+                for="{{ method.name }}_{{ param }}"
+                class="form-label"
+              >
+                {{param}}
+              </label>
+              <input
+                type="text"
+                class="form-control"
+                name="{{ method.name }}_{{ param }}"
+                id="{{ method.name }}_{{ param }}"
+              >
+            </div>
+            {% endfor %}
+          </div>
+          <input type="hidden" name="method" value="{{ method.name }}">
+          <button type="submit" class="btn btn-success btn-sm">Call</button>
+        </form>
+      </div>
+    </div>
     <br>
     {% endfor %}
 
