@@ -10,6 +10,17 @@ services:
     container_name: app
     build:
       context: .
+      target: api
+    depends_on:
+      - broker
+    volumes:
+      - ./src:/app/
+
+  service:
+    container_name: service
+    build:
+      context: .
+      target: service
     depends_on:
       - broker
     volumes:
