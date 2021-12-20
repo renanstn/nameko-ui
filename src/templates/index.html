@@ -21,26 +21,23 @@
     <br>
 
     {% for method in methods %}
-    <div class="row g-3 align-items-center">
-      <div class="col-auto">
-        <span>{{ method.name }}</span>
-      </div>
+    <span>{{ method.name }}</span>
+    <form action="/call_rpc/{{ service_name }}" method="POST">
+
       {% for param in method.params %}
-      <div class="col-auto">
-        <label for="param_{{param}}" class="col-form-label">{{param}}</label>
-      </div>
-      <div class="col-auto">
-        <input type="text" id="param_{{param}}" class="form-control">
-      </div>
+      <label for="{{ method.name }}_{{ param }}">{{param}}</label>
+      <input type="text" name="{{ method.name }}_{{ param }}" id="{{ method.name }}_{{ param }}">
       {% endfor %}
-      <div class="col-auto">
-        <button type="button" class="btn btn-success btn-sm">Play</button>
-      </div>
-    </div>
+
+      <input type="hidden" name="method" value="{{ method.name }}">
+      <button type="submit" class="btn btn-success btn-sm">Play</button>
+    </form>
+    <br>
     {% endfor %}
 
   </div>
 </body>
+
 </html>
 
 <script src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
