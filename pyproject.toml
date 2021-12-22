@@ -8,6 +8,7 @@ authors = ["Renan Santana <renan_ota@hotmail.com>"]
 python = "^3.9"
 nameko = "^2.14.1"
 Flask = "^2.0.2"
+python-decouple = "^3.5"
 
 [tool.poetry.dev-dependencies]
 

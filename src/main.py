@@ -1,12 +1,15 @@
+from decouple import config
 from flask import Flask, render_template, request, redirect, url_for
 from nameko.standalone.rpc import ClusterRpcProxy
 import service_inspector
 
 
-NAMEKO_CONFIG = {"AMQP_URI": "pyamqp://guest:guest@broker"}
-
 app = Flask(__name__)
-nameko_service_data = service_inspector.get_service_data()
+
+AMQP_URI = config("AMQP_URI", default="pyamqp://guest:guest@broker")
+NAMEKO_CONFIG = {"AMQP_URI": AMQP_URI}
+
+nameko_service_data = service_inspector.read_file("./service.py")
 
 
 @app.route("/")
