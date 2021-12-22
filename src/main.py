@@ -9,7 +9,7 @@ app = Flask(__name__)
 AMQP_URI = config("AMQP_URI", default="pyamqp://guest:guest@broker")
 NAMEKO_CONFIG = {"AMQP_URI": AMQP_URI}
 
-nameko_service_data = service_inspector.read_file("./service.py")
+nameko_service_data = service_inspector.inspect_file("./service.py")
 
 
 @app.route("/")

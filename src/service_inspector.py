@@ -1,7 +1,7 @@
 import ast
 
 
-def read_file(file_path) -> dict:
+def inspect_file(file_path) -> dict:
     # Read file to get the file tree
     with open(file_path) as file:
         node = ast.parse(file.read())
