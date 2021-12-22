@@ -6,10 +6,11 @@ WORKDIR /app
 COPY pyproject.toml poetry.lock /app/
 RUN poetry config virtualenvs.create false \
     && poetry install --no-interaction --no-ansi
-COPY ./src /app/
 
 FROM base AS api
+COPY ./src /app/
 CMD ["sh", "run_dev_server.sh"]
 
 FROM base AS service
+COPY ./example_service /app/
 CMD ["nameko", "run", "service", "--config", "config.yaml"]

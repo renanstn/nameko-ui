@@ -24,4 +24,4 @@ services:
     depends_on:
       - broker
     volumes:
-      - ./src:/app/
+      - ./example_service:/app/
