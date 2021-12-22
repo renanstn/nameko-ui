@@ -1,51 +1,40 @@
-import inspect
-import service
+import ast
 
 
-def get_service_data() -> dict:
-    members = inspect.getmembers(service)
-    service_class_name = None
+def read_file(file_path) -> dict:
+    # Read file to get the file tree
+    with open(file_path) as file:
+        node = ast.parse(file.read())
 
-    for member in members:
-        if "service" in member[0].lower():
-            service_class_name = member[0]
-
-    if service_class_name is None:
-        print("Nameko class not identified")
-        exit(1)
-
-    service_class = getattr(service, service_class_name)
-    members_of_class = inspect.getmembers(service_class)
+    # Identify classes
+    classes = [n for n in ast.walk(node) if isinstance(n, ast.ClassDef)]
+    class_name = None
     methods_and_params = []
 
-    for member in members_of_class:
-        # Ignore builtin methods
-        if member[0].startswith("__"):
+    for class_ in classes:
+        if not "service" in class_.name.lower():
             continue
 
-        if member[0] == "name":
-            service_name = member[1]
+        class_name = class_.name
+        # variables = [n for n in ast.walk(class_) if isinstance(n, ast.Name) and n.id == "name"]
+        methods = [n for n in ast.walk(class_) if isinstance(n, ast.FunctionDef)]
 
-        # Filter only functions
-        if not inspect.isfunction(member[1]):
-            continue
+        # Get methods
+        for method in methods:
+            method_data = {
+                'name': method.name,
+                'params': []
+            }
 
+            # Get method params
+            for arg in method.args.args:
+                if arg.arg == "self":
+                    continue
+                method_data["params"].append(arg.arg)
 
-        method_name = member[0]
-        method_data = {
-            'name': method_name,
-            'params': []
-        }
-
-        # Get params of method
-        params = inspect.signature(member[1])
-        for param in params.parameters:
-            if param == "self":
-                continue
-            method_data['params'].append(param)
-        methods_and_params.append(method_data)
+            methods_and_params.append(method_data)
 
     return {
-        'service_name': service_name,
-        'methods': methods_and_params,
+        "service_name": class_name,
+        "methods": methods_and_params
     }
