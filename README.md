@@ -6,5 +6,4 @@
 App que analisa um serviço nameko, e disponibiliza uma interface gráfica para que seus RPCs possam ser chamados de forma mais simples e visual.
 
 ![service code](images/screen.png)
-![upload file](images/screen2.png)
 ![visual rpcs](images/screen3.png)
