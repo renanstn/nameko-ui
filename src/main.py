@@ -1,23 +1,42 @@
 from decouple import config
-from flask import Flask, render_template, request, redirect, url_for
+from flask import Flask, render_template, request, redirect, url_for, session
 from nameko.standalone.rpc import ClusterRpcProxy
 import service_inspector
 
 
 app = Flask(__name__)
+app.secret_key = config("SECRET_KEY", default="secret")
 
 AMQP_URI = config("AMQP_URI", default="pyamqp://guest:guest@broker")
 NAMEKO_CONFIG = {"AMQP_URI": AMQP_URI}
 
-nameko_service_data = service_inspector.inspect_file("./service.py")
-
 
 @app.route("/")
-def index():
-    service_name = nameko_service_data['service_name']
-    methods = nameko_service_data['methods']
+def select_service():
     return render_template(
-        "index.html",
+        "select_service.html",
+        service_name="Upload service file",
+    )
+
+@app.route("/file_upload/", methods=["POST"])
+def file_upload():
+    file = request.files["service_file"]
+    file_in_bytes = file.read()
+    file_content = file_in_bytes.decode("UTF-8")
+    nameko_service_data = service_inspector.inspect_content(file_content)
+
+    session["service_name"] = "test_service"
+    session["methods"] = nameko_service_data['methods']
+
+    return redirect(url_for("rpcs"))
+
+@app.route("/rpcs")
+def rpcs():
+    methods = session["methods"]
+    service_name = session["service_name"]
+
+    return render_template(
+        "rpcs.html",
         methods=methods,
         service_name=service_name
     )
@@ -38,4 +57,4 @@ def call_rpc(service_name):
         response = method(**method_params)
         print(response)
 
-    return redirect(url_for("index"))
+    return redirect(url_for("rpcs"))

@@ -1,10 +1,21 @@
 import ast
 
 
-def inspect_file(file_path) -> dict:
-    # Read file to get the file tree
-    with open(file_path) as file:
-        node = ast.parse(file.read())
+def inspect_content(file_content) -> dict:
+    """
+    Parse file content using ast, and identify methods and params.
+    Returns a dict like this:
+    {
+        "service_name": string,
+        "methods": [
+            {
+                "name": string,
+                "params": [string]
+            }
+        ]
+    }
+    """
+    node = ast.parse(file_content)
 
     # Identify classes
     classes = [n for n in ast.walk(node) if isinstance(n, ast.ClassDef)]

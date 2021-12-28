@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <form action="/file_upload/" method="post" enctype=multipart/form-data>
+    <div class="mb-2">
+      <label for="form-file" class="form-label">Nameko service file</label>
+      <input class="form-control" type="file" id="form-file" name="service_file">
+    </div>
+
+    <div class="mb-2">
+      <button type="submit" class="btn btn-success">Send</button>
+    </div>
+  </form>
+{% endblock %}
