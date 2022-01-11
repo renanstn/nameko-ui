@@ -7,3 +7,9 @@ App que analisa um serviço nameko, e disponibiliza uma interface gráfica para 
 
 ![service code](images/screen.png)
 ![visual rpcs](images/screen3.png)
+
+## Referências
+
+Referências que foram úteis para este projeto:
+
+- https://docs.docker.com/compose/networking/#use-a-pre-existing-network
