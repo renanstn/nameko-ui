@@ -23,3 +23,8 @@ services:
       - broker
     volumes:
       - ./example_service:/app/
+
+networks:
+  default:
+    external: true
+    name: msets_default
