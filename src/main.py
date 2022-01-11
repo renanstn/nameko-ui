@@ -25,7 +25,7 @@ def file_upload():
     file_content = file_in_bytes.decode("UTF-8")
     nameko_service_data = service_inspector.inspect_content(file_content)
 
-    session["service_name"] = "test_service"
+    session["service_name"] = request.form["service-name"]
     session["methods"] = nameko_service_data['methods']
 
     return redirect(url_for("rpcs"))

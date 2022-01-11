@@ -2,6 +2,12 @@
 
 {% block content %}
   <form action="/file_upload/" method="post" enctype=multipart/form-data>
+
+    <div class="mb-2">
+      <label for="form-file" class="form-label">Service name</label>
+      <input class="form-control" type="text" id="service-name" name="service-name">
+    </div>
+
     <div class="mb-2">
       <label for="form-file" class="form-label">Nameko service file</label>
       <input class="form-control" type="file" id="form-file" name="service_file">
